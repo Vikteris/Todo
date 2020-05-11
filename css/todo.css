@@ -62,10 +62,25 @@ body {
     }
     .container > .item > .deadline {
         display: inline-block;
-        width: 100%;
-        
+        width: 100%;   
 
     }
+        .container > .item > .actions {
+            display: inline-block;
+            width: 100%;
+            margin-top: 10px;;   
+
+        }
+            .item > .actions > .action {
+                display: inline-block;
+                margin: 10px 10px 0 0 ;
+                color: #36f;
+                font-size: 14px; 
+                line-height: 20px;   
+                text-decoration: underline;
+                cursor: pointer;
+        
+            }
 @media ( min-width: 500px ) {
     .container {
         grid-template-columns: 1fr 1fr;
