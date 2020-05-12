@@ -60,7 +60,7 @@ BTNremoveAll.addEventListener('click', actionRemoveAllTodoItems);
 function actionRemoveAllTodoItems ( event ) {
     const parent = event.target.closest('.container');
     const allTodoItems = parent.querySelectorAll('.item');
-    console.log(allTodoItems);
+    
 
     for( let i=0; i<allTodoItems.length; i++ ){
         allTodoItems[i].remove();
