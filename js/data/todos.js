@@ -20,6 +20,12 @@ let todo_list = [
         deadline: '2020-05-06 13:00',
         status : 'done',
     },
+    {
+        description: 'Naujos užduotys',
+        created_on: '2020-05-07 14:28',
+        deadline: '2020-05-011 13:17',
+        status : 'in-progress',
+    },
 ];
 
 
