@@ -67,3 +67,27 @@ function actionRemoveAllTodoItems ( event ) {
     }
     
 }
+
+
+/********************************
+    FORM ACTIONS mygtuku validavimas
+********************************/
+
+const DOMform= document.querySelector('.form');
+const DOMtaskTextarea= DOMform.querySelector('textarea[name="task"]')
+const DOMdeadlineInput=DOMform.querySelector('input[name="deadline"]');
+const DOMformActions = DOMform.querySelector('.actions');
+const DOMformAdd = DOMformActions.querySelector('.btn.add');
+const DOMformClear = DOMformActions.querySelector('.btn.clear');
+
+
+
+DOMformClear.addEventListener('click', clearForm );
+
+function clearForm(){
+    
+    DOMtaskTextarea.value= '';
+    DOMdeadlineInput.value= '';
+    
+    
+}
