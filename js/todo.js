@@ -22,12 +22,12 @@ function renderList(list) {
             </div>`;
     }
        
-    
-    return listPlace.innerHTML += HTML;
+   
+    return listPlace.insertAdjacentHTML('beforeend', HTML);
 }
 
 
-/********************************
+/******************************** 
     GENERATE CONTENT
 ********************************/
 
@@ -111,9 +111,10 @@ function addNewTodoItem(){
         (new Date(newTodo.deadline)).toString() === 'Invalid Date' ) {
         return alert('ERROR: nevalidus deadline');
     }
-
-    todo_list.push(newTodo);
+    console.log(newTodo);
     
+    todo_list.push(newTodo);
+    renderList(todo_list);
     return;
 }
 
