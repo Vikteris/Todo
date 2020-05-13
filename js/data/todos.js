@@ -1,26 +1,31 @@
 "use strict"
 
+let todo_id = 4;
 
 let todo_list = [
     {
+        id: 1,
         description: 'Pasiruošti rytojui',
         created_on: '2020-05-05 19:03',
         deadline: '2020-05-06 12:55',
         status : 'todo',
     },
     {
+        id: 2,
         description: 'Pasiruošti mašina dažymui',
         created_on: '2020-05-05 19:05',
         deadline: '2020-05-06 09:00',
         status : 'in-progress',
     },
     {
+        id: 3,
         description: 'Klausyti paskaitos',
         created_on: '2020-05-05 19:04',
         deadline: '2020-05-06 13:00',
         status : 'done',
     },
     {
+        id: 4,
         description: 'Naujos užduotys',
         created_on: '2020-05-07 14:28',
         deadline: '2020-05-011 13:17',
