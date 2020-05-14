@@ -1,4 +1,6 @@
 "use strict";
+let todo_id = 0;
+let todo_list = [];
 
 const DOMcontainer = document.querySelector('.container');
 
@@ -7,10 +9,13 @@ const BTNremoveAll = DOMglobals.querySelector('.action.remove');
 
 const DOMform = DOMcontainer.querySelector('.form');
 const DOMtaskTextarea = DOMform.querySelector('textarea[name="task"]');
+const DOMswitchStatus = DOMform.querySelector('.switch');
 const DOMdeadlineInput = DOMform.querySelector('input[name="deadline"]');
 const DOMformActions = DOMform.querySelector('.actions');
 const DOMformAdd = DOMformActions.querySelector('.btn.add');
 const DOMformClear = DOMformActions.querySelector('.btn.clear');
+const DOMformSave = DOMformActions.querySelector('.btn.save');
+const DOMformCancel = DOMformActions.querySelector('.btn.cancel');
 
 let DOMitems = null;
 
@@ -29,6 +34,7 @@ function renderTodoItem( data ) {
             <div class="deadline">${data.deadline}</div>
             <div class="actions">
                 <div class="action remove">Remove</div>
+                <div class="action edit">Edit</div>
             </div>
         </div>`;
     
@@ -51,6 +57,11 @@ function renderTodoItem( data ) {
             }
 
             removeTodo( currentlyAddedItemIndex );
+        });
+
+    item.querySelector('.action.edit')
+        .addEventListener('click', () => {
+            DOMform.classList.add('editing');
         });
     return;
 }
@@ -104,32 +115,68 @@ function removeTodo( todoIndex ) {
     }
     
     todo_list = leftTodos;
+    updateMemory();
     return;
 }
 
 function createNewTodo() {
-    todo_id++;
-    let newTodo={
-        id:todo_id,
+    let newTodo = {
+        id: todo_id,
         description: DOMtaskTextarea.value.trim(),
         created_on: formatedDate(),
         deadline: DOMdeadlineInput.value.trim(),
-        status : 'todo',
+        status: 'todo'
     };
 
-    if( newTodo.description.length ===0 ){
-        return alert ('ERROR: Tuscias aprasymas'); /*  return console.error- meta errorus consoleje, o return alert. pop upina lentele*/
-    } 
+    if ( newTodo.description.length === 0 ) {
+        return alert('ERROR: tuscias aprasymas');
+    }
     
     if ( newTodo.deadline.length > 0 &&
         (new Date(newTodo.deadline)).toString() === 'Invalid Date' ) {
         return alert('ERROR: nevalidus deadline');
     }
-    console.log(newTodo);
     
     todo_list.push( newTodo );
-    renderTodoItem( newTodo);
+    renderTodoItem( newTodo );
+    todo_id++;
+    updateMemory();
 }
+
+function updateSwitch( event ) {
+    const value = event.target.dataset.option;
+    event.target.parentElement.setAttribute('data-selected', value);
+}
+
+/*******************************
+    MEMORY MANAGEMENT
+*******************************/
+
+function memoryManagement() {
+    if ( localStorage.getItem('todo_id') ) {
+        // jei yra, tai is localStorage istraukiu esama reiksme ir ja priskiriu todo_id
+        todo_id = JSON.parse( localStorage.getItem('todo_id') );
+    } else {
+        // jei localStorage nera todo_id, tai ji sukuriu ir priskiriu reiksme 0
+        localStorage.setItem('todo_id', JSON.stringify(todo_id));
+    }
+
+    
+    if ( localStorage.getItem('todo_list') ) {
+        // jei yra, tai is localStorage istraukiu esama reiksme ir ja priskiriu todo_list
+        todo_list = JSON.parse( localStorage.getItem('todo_list') );
+    } else {
+        // jei localStorage nera todo_list, tai ji sukuriu ir priskiriu reiksme []
+        localStorage.setItem('todo_list', JSON.stringify(todo_list));
+    }
+}
+
+function updateMemory() {
+    localStorage.setItem('todo_id', JSON.stringify(todo_id));
+    localStorage.setItem('todo_list', JSON.stringify(todo_list));
+}
+
+memoryManagement();
 
 /*******************************
     GENERATE CONTENT
@@ -142,6 +189,12 @@ DOMdeadlineInput.value = formatedDate( 86400000 );
     INIT ACTIONS
 *******************************/
 
-BTNremoveAll.addEventListener('click', removeAllTodos); 
+BTNremoveAll.addEventListener('click', removeAllTodos);
 
-DOMformAdd.addEventListener('click', createNewTodo)
+DOMformAdd.addEventListener('click', createNewTodo);
+
+DOMswitchStatus.addEventListener('click', updateSwitch);
+
+DOMformCancel.addEventListener('click', () => {
+    DOMform.classList.remove('editing');
+})
