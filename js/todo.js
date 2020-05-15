@@ -26,6 +26,7 @@ function renderList( list ) {
 *******************************/
 renderList(todo_list);
 
+
 /*******************************
     REMOVE SINGLE TODO ITEM
 *******************************/
