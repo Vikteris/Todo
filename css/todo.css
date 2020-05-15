@@ -179,10 +179,10 @@ body {
                 text-decoration: underline;
                 cursor: pointer;
             }
-            .container.editing .item > .actions {
+
+           .container.editing .item > .actions {
                 visibility: hidden;
             }
-
 @media ( min-width: 500px ) {
     .container {
         grid-template-columns: 1fr 1fr;

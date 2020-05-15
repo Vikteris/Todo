@@ -29,6 +29,7 @@ function renderTodoItem( data ) {
     const id = 'todo_'+data.id;
     const HTML = `
         <div class="item" id="${id}" data-task-id="${data.id}">
+        <div class="item" id="${id}">
             <div class="status ${data.status}"></div>
             <p class="description">${data.description}</p>
             <div class="deadline">${data.deadline}</div>
@@ -64,10 +65,10 @@ function renderTodoItem( data ) {
             DOMcontainer.classList.add('editing');
             DOMform.classList.add('editing');
             populateEditingForm( data.id );
+            DOMform.classList.add('editing');
         });
     return;
 }
-
 function populateEditingForm( id ) {
     let task = {};
     let i=0;
@@ -83,7 +84,6 @@ function populateEditingForm( id ) {
     DOMdeadlineInput.value = task.deadline;
     DOMswitchStatus.setAttribute('data-selected', task.status);
 }
-
 function formatedDate( deltaTime = 0 ) {
     let now = new Date();
 
@@ -142,6 +142,8 @@ function createNewTodo() {
         id: todo_id,
         created_on: formatedDate(),
         description: DOMtaskTextarea.value.trim(),
+        description: DOMtaskTextarea.value.trim(),
+        created_on: formatedDate(),
         deadline: DOMdeadlineInput.value.trim(),
         status: 'todo'
     };
@@ -160,7 +162,6 @@ function createNewTodo() {
     todo_id++;
     updateMemory();
 }
-
 function updateTaskInfo() {
     const index = parseInt(DOMform.dataset.taskIndex);
     const description = DOMtaskTextarea.value;
@@ -199,7 +200,6 @@ function clearForm() {
     DOMcontainer.classList.remove('editing');
     DOMform.classList.remove('editing');
 }
-
 function updateSwitch( event ) {
     const value = event.target.dataset.option;
     event.target.parentElement.setAttribute('data-selected', value);
@@ -265,3 +265,10 @@ DOMformSave.addEventListener('click', () => {
 DOMformCancel.addEventListener('click', () => {
     clearForm();
 });
+DOMformAdd.addEventListener('click', createNewTodo);
+
+DOMswitchStatus.addEventListener('click', updateSwitch);
+
+DOMformCancel.addEventListener('click', () => {
+    DOMform.classList.remove('editing');
+})
